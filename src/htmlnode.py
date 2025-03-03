@@ -65,7 +65,3 @@ class ParentNode(HTMLNode):
         return f"{opening_tag}{children_html}{closing_tag}"
 
 
-
-
-
-

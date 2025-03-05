@@ -1,7 +1,7 @@
 from enum import Enum
 
 from htmlnode import ParentNode
-from inline_markdown import text_to_textnodes
+from markdown import text_to_textnodes
 from textnode import text_node_to_html_node, TextNode, TextType
 
 

@@ -32,3 +32,29 @@ def extract_title(md):
         if line.startswith("# "):
             return line[2:]
     raise ValueError("no title found")
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    # List all entries in the content directory
+    entries = os.listdir(dir_path_content)
+    
+    for entry in entries:
+        # Create full paths
+        entry_path = os.path.join(dir_path_content, entry)
+        
+        # If the entry is a file and ends with .md
+        if os.path.isfile(entry_path) and entry.endswith(".md"):
+            # Create the corresponding destination path
+            # We need to replace content directory with public directory
+            # and change .md extension to .html
+            rel_path = os.path.relpath(entry_path, dir_path_content)
+            dest_path = os.path.join(dest_dir_path, rel_path.replace(".md", ".html"))
+            
+            # Generate the page
+            generate_page(entry_path, template_path, dest_path)
+        
+        # If it's a directory, recursively process it
+        elif os.path.isdir(entry_path):
+            # Create corresponding directory in destination
+            new_dest_dir = os.path.join(dest_dir_path, entry)
+            # Recursively process the subdirectory
+            generate_pages_recursive(entry_path, template_path, new_dest_dir)
